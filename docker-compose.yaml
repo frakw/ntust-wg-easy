@@ -5,10 +5,10 @@ volumes:
 services:
   wg-easy:
     environment:
-      - WG_HOST=172.28.0.1 #改成校內電腦的zerotier內網ip
-      #本教學預設使用172.28.0.x，請根據你的配置修改以下二行
-      - WG_DEFAULT_ADDRESS=172.28.0.x
-      - WG_ALLOWED_IPS=140.118.0.0/16, 172.28.0.0/24
+      - WG_HOST=172.28.0.1 #改成校內電腦的zerotier區網ip
+      #本教學預設使用10.8.0.x作為VPN區網網段，可自行修改
+      - WG_DEFAULT_ADDRESS=10.8.0.x
+      - WG_ALLOWED_IPS=140.118.0.0/16, 10.8.0.0/24
 
       #設定網頁管理面板的密碼，如不需要，可刪除
       - PASSWORD=設定簡易的網頁管理密碼

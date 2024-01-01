@@ -59,27 +59,64 @@ sudo zerotier-cli join 替換成你的network_id
 ## 架設wireguard vpn伺服器
 此步驟在校內電腦進行
 
-### Ubuntu
+### 修改`docker-compose.yaml`
 ```
-# 安裝git, docker, docker-compose，已安裝者可跳過
-sudo apt install git
-curl -sSL https://get.docker.com/ | CHANNEL=stable bash
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
-# 首先找個地方clone專案
 git clone https://github.com/frakw/ntust-wg-easy.git
 cd ntust-wg-easy
 ```
 開啟`docker-compose.yaml`根據你前面在zerotier的配置進行修改
 ![image](imgs/modify_docker-compose.yaml.png)
 
+### Ubuntu
+```
+# 安裝docker, docker-compose，已安裝者可跳過
+curl -sSL https://get.docker.com/ | CHANNEL=stable bash
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+
 ```
 #啟動server
 sudo docker compose up -d
 ```
 ### Windows
-
+安裝wsl2，已安裝者可跳過
+```
+wsl --install
+```
+重新開機，然後安裝Docker Desktop on Windows : \
+https://docs.docker.com/desktop/install/windows-install/
+```
+#啟動server
+docker compose up -d
+```
+> 註: 視情況可能需要關閉windows防火牆才能存取
 ## 校外電腦連線
+### 下載`.conf`檔
+進入 http://172.28.0.1:51821/ ，ip是你校內電腦的zerotier區網ip，port是wireguard預設的`51821` \
+![image](imgs/wireguard_web.png)
+點擊New Client，輸入名字，下載.conf檔
+![image](imgs/download_conf.png)
 ### Ubuntu
+```
+sudo apt install wireguard resolvconf
+sudo mv <config檔> /etc/wireguard/ntust-wg-easy.conf
+wg-quick up ntust-wg-easy.conf
+#設定開機後自動啟動，不需要可跳過
+systemctl enable wg-quick@ntust-wg-easy
+```
 ### Windows
+進入 https://www.zerotier.com/download/ 並安裝軟體 \
+點擊 Add Tunnel，選擇剛才下載的.conf檔
+![image](imgs/windows_wireguard.png)
+點擊Activate按鈕
+![image](imgs/windows_wireguard_add_conf.png)
+### 測試是否成功
+```
+#使用你在校內的電腦ip
+ping 140.118.x.x
+```
+---
+使用openspeedtest測試的結果，操作一些工作站或傳檔案應該是蠻夠的了 \
+![image](imgs/openspeedtest.png)
