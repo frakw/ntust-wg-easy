@@ -1,0 +1,31 @@
+version: "3.8"
+volumes:
+  etc_wireguard:
+
+services:
+  wg-easy:
+    environment:
+      - WG_HOST=172.28.0.1 #改成校內電腦的zerotier內網ip
+      #本教學預設使用172.28.0.x，請根據你的配置修改以下二行
+      - WG_DEFAULT_ADDRESS=172.28.0.x
+      - WG_ALLOWED_IPS=140.118.0.0/16, 172.28.0.0/24
+
+      #設定網頁管理面板的密碼，如不需要，可刪除
+      - PASSWORD=設定簡易的網頁管理密碼
+
+      - WG_DEFAULT_DNS=1.1.1.1
+      - WG_PERSISTENT_KEEPALIVE=25
+    image: ghcr.io/wg-easy/wg-easy
+    container_name: wg-easy
+    volumes:
+      - etc_wireguard:/etc/wireguard
+    ports:
+      - "51820:51820/udp"
+      - "51821:51821/tcp"
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
