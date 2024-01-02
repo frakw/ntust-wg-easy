@@ -1,11 +1,11 @@
 # ntust-wg-easy
- 從校外網路用台科校內電腦架設VPN服務連接學校網路 (不須申請) \
+ 用台科校內電腦架設VPN服務 \
  本教學透過 zerotier + wireguard 實現連線
 ## 閱前聲明
 學校近幾年因為資安問題，將校外直連校內ip用防火牆阻擋了 \
 如果要存取校內網路，台科校方有提供VPN伺服器，請參閱: \
 https://www.cc.ntust.edu.tw/p/404-1050-91023.php?Lang=zh-tw \
-本教學目的是提供說明，讓大家都能架設自己的VPN，不需透過學校官方VPN來進行連線 \
+本教學目的是提供說明，讓大家都能架設自己的VPN，**不需透過學校的官方VPN來進行連線** \
 免責聲明 :
 ```
 * 本教學不提供任何VPN服務，該方法可能違反學校規範，並且不保證永久有效。
@@ -26,7 +26,7 @@ https://www.cc.ntust.edu.tw/p/412-1050-8537.php?Lang=zh-tw
 (若是不信任他們的官方伺服器，也可以自己架設[ZeroTierOne](https://github.com/zerotier/ZeroTierOne))
 
 ## 架構圖
-aaa
+![image](imgs/architecture.png)
 ## 加入zerotier網路
 此步驟在校外/校內電腦都要進行
 
@@ -34,7 +34,7 @@ aaa
 註冊並登入zerotier.com，進入 https://my.zerotier.com/ \
 按下Create A Network，點擊進入，往下滑，選擇你要使用的區網網段 \
 本文預設使用`172.28.*.*` \
-![image](imgs/assign_local_network_range.png)
+![image](imgs/assign_local_network_range.png) \
 然後將16碼的network id存起來，之後會用到 \
 ![image](imgs/network_id.png)
 
@@ -52,19 +52,25 @@ sudo zerotier-cli join 替換成你的network_id
 
 ### 認證裝置
 回到zerotier控制頁面，https://my.zerotier.com/ \
-找到新加入的裝置，取個名字，設定一個ip (建議從1開始往上加)
-![image](imgs/add_device.png)
-本文預設將校內電腦的ip設為`172.28.0.1`
+找到新加入的裝置，取個名字，設定一個ip (建議從1開始往上加)，然後再將左邊的Auth勾上
+![image](imgs/add_device.png) \
+本文預設將校內電腦的ip設為`172.28.0.1`，校外電腦的ip設為`172.28.0.2`
 
 ## 架設wireguard vpn伺服器
 此步驟在校內電腦進行
 
 ### 修改`docker-compose.yaml`
 ```
+# 把本專案clone下來
 git clone https://github.com/frakw/ntust-wg-easy.git
 cd ntust-wg-easy
 ```
 開啟`docker-compose.yaml`根據你前面在zerotier的配置進行修改
+* WG_HOST : 設定成你校內電腦的zerotier ip，本文預設是`172.28.0.1`
+* WG_DEFAULT_ADDRESS : VPN的區網網段，本文預設使用`10.8.0.x`
+* WG_ALLOWED_IPS : 這邊設定VPN Client可以存取的網段，我們將台科的固定ip(140.118)開放出來，VPN的區網網段也開放出來
+* PASSWORD : wg-easy的一個簡易網頁管理面板的密碼，因為我們的VPN是架在區網，所以不一定需要使用
+
 ![image](imgs/modify_docker-compose.yaml.png)
 
 ### Ubuntu
@@ -101,7 +107,7 @@ docker compose up -d
 ### Ubuntu
 ```
 sudo apt install wireguard resolvconf
-sudo mv <config檔> /etc/wireguard/ntust-wg-easy.conf
+sudo mv <conf檔> /etc/wireguard/ntust-wg-easy.conf
 wg-quick up ntust-wg-easy.conf
 #設定開機後自動啟動，不需要可跳過
 systemctl enable wg-quick@ntust-wg-easy
