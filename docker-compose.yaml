@@ -11,7 +11,7 @@ services:
       - WG_ALLOWED_IPS=140.118.0.0/16, 10.8.0.0/24
 
       #設定網頁管理面板的密碼，如不需要，可刪除
-      - PASSWORD=設定簡易的網頁管理密碼
+      - PASSWORD=1234
 
       - WG_DEFAULT_DNS=1.1.1.1
       - WG_PERSISTENT_KEEPALIVE=25

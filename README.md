@@ -24,7 +24,7 @@ https://www.cc.ntust.edu.tw/p/412-1050-8537.php?Lang=zh-tw
 * wireguard : 免費開源的VPN伺服器軟體 [wiki](https://zh.wikipedia.org/zh-tw/WireGuard) 
 * zerotier : 異地組網服務，用於讓學校電腦可以透過區網訪問，免費版就很夠用了 \
 (若是不信任他們的官方伺服器，也可以自己架設[ZeroTierOne](https://github.com/zerotier/ZeroTierOne))
-
+* wg-easy : Wireguard的Docker容器，附帶管理用的webui [Link](https://github.com/wg-easy/wg-easy)
 ## 架構圖
 ![image](imgs/architecture.png)
 ## 加入zerotier網路
