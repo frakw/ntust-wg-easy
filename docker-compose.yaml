@@ -3,7 +3,7 @@ volumes:
   etc_wireguard:
 
 services:
-  wg-easy:
+  ntust-wg-easy:
     environment:
       - WG_HOST=172.28.0.1 #改成校內電腦的zerotier區網ip
       #本教學預設使用10.8.0.x作為VPN區網網段，可自行修改

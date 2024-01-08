@@ -115,7 +115,7 @@ systemctl enable wg-quick@ntust-wg-easy
 ### Windows
 進入 https://www.zerotier.com/download/ 並安裝軟體 \
 點擊 Add Tunnel，選擇剛才下載的.conf檔
-![image](imgs/windows_wireguard.png)
+![image](imgs/windows_wireguard.png) \
 點擊Activate按鈕
 ![image](imgs/windows_wireguard_add_conf.png)
 ### 測試是否成功
@@ -123,6 +123,12 @@ systemctl enable wg-quick@ntust-wg-easy
 #使用你在校內的電腦ip
 ping 140.118.x.x
 ```
+如何沒有ping成功可以過一陣子在試，如果還是不行就把server與client都重開看看
+```
+docker restart ntust-wg-easy
+```
+然後有個奇怪的現象是，偶爾需要開啟web管理頁面後才能正常連線，我也不知道問題點在哪
+
 ---
 使用openspeedtest測試的結果，操作一些工作站或傳檔案應該是蠻夠的了 \
 ![image](imgs/openspeedtest.png)
