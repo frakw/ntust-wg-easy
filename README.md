@@ -114,9 +114,9 @@ systemctl enable wg-quick@ntust-wg-easy
 ```
 ### Windows
 進入 https://www.zerotier.com/download/ 並安裝軟體 \
-點擊 Add Tunnel，選擇剛才下載的.conf檔
+點擊 Add Tunnel，選擇剛才下載的.conf檔 \
 ![image](imgs/windows_wireguard.png) \
-點擊Activate按鈕
+點擊Activate按鈕 \
 ![image](imgs/windows_wireguard_add_conf.png)
 ### 測試是否成功
 ```
