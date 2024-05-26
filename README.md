@@ -119,6 +119,8 @@ systemctl enable wg-quick@ntust-wg-easy
 點擊Activate按鈕 \
 ![image](imgs/windows_wireguard_add_conf.png)
 ### 測試是否成功
+進入 https://software.ntust.edu.tw/websoftware/login.aspx，如果可以成功進去，就是有了 \
+![image](imgs/software_ntust.png) \
 ```
 #使用你在校內的電腦ip
 ping 140.118.x.x
