@@ -72,7 +72,7 @@ cd ntust-wg-easy
 * PASSWORD_HASH : wg-easy的一個簡易網頁管理面板的密碼(經過雜湊後)，因為我們的VPN是架在區網，所以不一定需要使用
 > 密碼雜湊方法:
 > * docker run ghcr.io/wg-easy/wg-easy wgpw 你要的密碼
-> * *重要** 把所有$改為$$, EX: $kw$. => $$kw$$.
+> * *重要** 把所有$改為$$, EX: `$kw$.` => `$$kw$$.`
 
 ![image](imgs/modify_docker-compose.yaml.png)
 
