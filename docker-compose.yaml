@@ -10,12 +10,15 @@ services:
       - WG_DEFAULT_ADDRESS=10.8.0.x
       - WG_ALLOWED_IPS=140.118.0.0/16, 10.8.0.0/24
 
-      #設定網頁管理面板的密碼，如不需要，可刪除
-      - PASSWORD=1234
+      #設定網頁管理面板的密碼(經過雜湊後)，目前預設為1234
+      #如不需要，可刪除
+      #生成方法: docker run ghcr.io/wg-easy/wg-easy wgpw 你要的密碼
+      #**重要** 把所有$改為$$, EX: $kw$. => $$kw$$.
+      - PASSWORD_HASH=$$2a$$12$$tlc9aLTkaaIBt5ICzEmEzOOAVGT0z1ZorUzcGicSbvQHwgIPSH.7u
 
       - WG_DEFAULT_DNS=1.1.1.1
       - WG_PERSISTENT_KEEPALIVE=25
-    image: ghcr.io/wg-easy/wg-easy
+    image: ghcr.io/wg-easy/wg-easy:latest
     container_name: ntust-wg-easy
     volumes:
       - etc_wireguard:/etc/wireguard

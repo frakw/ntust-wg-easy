@@ -69,7 +69,10 @@ cd ntust-wg-easy
 * WG_HOST : 設定成你校內電腦的zerotier ip，本文預設是`172.28.0.1`
 * WG_DEFAULT_ADDRESS : VPN的區網網段，本文預設使用`10.8.0.x`
 * WG_ALLOWED_IPS : 這邊設定VPN Client可以存取的網段，我們將台科的固定ip(140.118)開放出來，VPN的區網網段也開放出來
-* PASSWORD : wg-easy的一個簡易網頁管理面板的密碼，因為我們的VPN是架在區網，所以不一定需要使用
+* PASSWORD_HASH : wg-easy的一個簡易網頁管理面板的密碼(經過雜湊後)，因為我們的VPN是架在區網，所以不一定需要使用
+> 密碼雜湊方法:
+> * docker run ghcr.io/wg-easy/wg-easy wgpw 你要的密碼
+> * *重要** 把所有$改為$$, EX: $kw$. => $$kw$$.
 
 ![image](imgs/modify_docker-compose.yaml.png)
 
